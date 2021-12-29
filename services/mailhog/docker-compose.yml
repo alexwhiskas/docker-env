@@ -1,0 +1,9 @@
+version: "2.0"
+
+services:
+  mailhog:
+    image: mailhog/mailhog
+    env_file:
+      - .env
+    logging:
+      driver: 'none' # disable saving logs

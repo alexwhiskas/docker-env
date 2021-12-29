@@ -1,0 +1,12 @@
+version: "2.0"
+
+services:
+  ssl-proxy:
+    build: ./
+    env_file:
+      - .env
+    volumes:
+      - ./conf/localhost.template:/etc/nginx/docker/localhost.template:cached
+      - ./certificates/self-signed.key:/etc/ssl/certs/self-signed.key
+      - ./certificates/self-signed.crt:/etc/ssl/certs/self-signed.crt
+#    command: /bin/bash -c "envsubst \"$$(env | sed -e 's/=.*//' -e 's/^/\$$/g')\"  < /etc/nginx/docker/localhost.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"

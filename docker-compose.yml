@@ -1,0 +1,125 @@
+version: "2.0"
+
+services:
+
+  ssl-proxy:
+    env_file: .env
+    extends:
+      file: ./services/ssl-proxy/docker-compose.yml
+      service: ssl-proxy
+    depends_on:
+      - varnish
+#    ports: # uncomment to bind for used OS (http/s request flow: ssl-proxy -> varnish -> nginx)
+#      - "${IP_ADDRESS}:80:80" # linux
+#      - "${IP_ADDRESS}:443:443" # linux
+#      - "80:80" # macos
+#      - "443:443" # macos
+
+  varnish:
+    env_file: .env
+    extends:
+      file: ./services/varnish/docker-compose.yml
+      service: varnish
+    depends_on:
+      - nginx
+#    ports: # uncomment to bind for used OS (for varnish-nginx to avoid ssl-proxy, no https)
+#      - "${IP_ADDRESS}:80:80" # linux
+#      - "80:80" # macos
+
+  nginx:
+    env_file: .env
+    extends:
+      file: ./services/nginx/docker-compose.yml
+      service: nginx
+#    volumes:
+#      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
+#      - magento:/var/www/src # mount "magento" volume, if you want to keep /var/www/src contents after container deletion without mounting folder from localhost
+#     there might be external folders which you should additionally mount to your container
+#      - ${HOST_PUBLIC_MEDIA_FOLDER}:/var/www/public:cached
+#      - ${HOST_PRIVATE_MEDIA_FOLDER}:/var/www/private:cached
+    depends_on:
+      - php-fpm
+#    ports: # uncomment to bind for used OS (for nginx as only ws to avoid varnish cache, no https)
+#      - "${IP_ADDRESS}:80:80" # linux
+#      - "80:80" # macos
+
+  php-fpm:
+    env_file: .env
+    extends:
+      file: ./services/php-fpm/docker-compose.yml
+      service: php-fpm
+#    volumes:
+#      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
+#      - magento:/var/www/src # mount "magento" volume, if you want to keep /var/www/src contents after container deletion without mounting folder from localhost
+#     there might be external folders which you should additionally mount to your container
+#      - ${HOST_PUBLIC_MEDIA_FOLDER}:/var/www/public:cached
+#      - ${HOST_PRIVATE_MEDIA_FOLDER}:/var/www/private:cached
+    depends_on:
+      - mysql
+      - redis
+      - rabbitmq
+      - mailhog
+
+# uncomment this service, and you will be able to connect to mysql
+# with IP_ADDRESS:8080 with mysql_host=mysql, user=root, password=root
+#  phpmyadmin:
+#    env_file: .env
+#    extends:
+#      file: ./services/phpmyadmin/docker-compose.yml
+#      service: phpmyadmin
+#    depends_on:
+#      - mysql
+#    ports: # uncomment to bind for used OS
+#      - "${IP_ADDRESS}:8080:80" # linux
+#      - "8080:80" # macos
+
+  mysql:
+    env_file: .env
+    extends:
+      file: ./services/mysql/docker-compose.yml
+      service: mysql
+#    ports: # uncomment to bind for used OS
+#      - "${IP_ADDRESS}:3306:3306" # linux
+#      - "3306:3306" # macos
+
+  redis:
+    env_file: .env
+    extends:
+      file: ./services/redis/docker-compose.yml
+      service: redis
+
+  rabbitmq:
+    env_file: .env
+    extends:
+      file: ./services/rabbitmq/docker-compose.yml
+      service: rabbitmq
+#    ports: # uncomment to bind for used OS
+#      - "${IP_ADDRESS}:15672:15672" # linux
+#      - "${IP_ADDRESS}:5672:5672" # linux
+#      - "15672:15672" # macos
+#      - "5672:5672" # macos
+
+  mailhog:
+    env_file: .env
+    extends:
+      file: ./services/mailhog/docker-compose.yml
+      service: mailhog
+#    ports: # webui, uncomment to bind for used OS
+#      - "${IP_ADDRESS}:8025:8025" # linux
+#      - "8025:8025" # macos
+
+# if you need elasticsearch, just uncomment configuration below
+#  elasticsearch:
+#    env_file: .env
+#    extends:
+#      file: ./services/elasticsearch/docker-compose.yml
+#      service: elasticsearch
+#    ports: # uncomment to bind for used OS
+#      - "${GENERIC_IP}:9200:9200" # linux
+#      - "${GENERIC_IP}:9300:9300" # linux
+#      - "9200:9200" # macos
+#      - "9300:9300" # macos
+
+# uncomment section below to use volumes feature
+#volumes:
+#  magento:

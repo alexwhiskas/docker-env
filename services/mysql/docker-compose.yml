@@ -1,0 +1,10 @@
+version: "2.0"
+
+services:
+  mysql:
+#    platform: linux/x86_64 # uncomment if need arm support (apple silicon CPU), comment if not :D
+    image: mysql:5.7
+    env_file:
+      - .env
+    volumes:
+      - ./../../volumes/mysql:/var/lib/mysql:cached

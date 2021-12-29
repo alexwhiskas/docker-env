@@ -1,0 +1,10 @@
+version: "2.0"
+
+services:
+  elasticsearch:
+    image: elasticsearch:6.8.18
+    env_file:
+      - .env
+    container_name: ${COMPOSE_PROJECT_NAME}-m2-elastic
+    volumes:
+      - ./../../volumes/elasticsearch:/usr/share/elasticsearch/data:cached

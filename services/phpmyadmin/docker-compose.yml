@@ -1,0 +1,9 @@
+version: "2.0"
+
+services:
+  phpmyadmin:
+    env_file: .env
+    image: phpmyadmin
+    restart: on-failure
+    environment:
+      - PMA_ARBITRARY=1

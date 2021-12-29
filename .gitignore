@@ -1,0 +1,25 @@
+.idea
+
+volumes/elasticsearch
+!volumes/elasticsearch/.placeholder
+volumes/composer
+!volumes/composer/.placeholder
+volumes/mysql
+!volumes/mysql/.placeholder
+volumes/rabbitmq
+!volumes/rabbitmq/.placeholder
+
+diff-files
+!diff-files/.placeholder
+
+services/php-fpm/etc
+!services/php-fpm/etc/.placeholder
+
+services/ssl-proxy/certificates
+!services/ssl-proxy/certificates/.placeholder
+
+# I prefer to have ignored "env" folder in my project repo, instead of having project folder within environment architecture
+magento
+magento2
+src
+app

@@ -1,0 +1,14 @@
+version: "2.0"
+
+services:
+
+  nginx:
+    image: nginx
+    env_file:
+      - .env
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf:cached
+      - ./conf/magento2.conf:/etc/nginx/docker/magento2.conf:cached
+      - ./conf/templates/backend.template:/etc/nginx/docker/backend.template:cached
+      - ./conf/templates/site.template:/etc/nginx/docker/site.template:cached
+    command: /bin/bash -c "envsubst < /etc/nginx/docker/backend.template > /etc/nginx/conf.d/backend.conf && envsubst \"$$(env | sed -e 's/=.*//' -e 's/^/\$$/g')\" < /etc/nginx/docker/site.template > /etc/nginx/conf.d/site.conf && exec nginx -g 'daemon off;'"
