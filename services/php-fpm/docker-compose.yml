@@ -7,7 +7,7 @@ services:
       dockerfile: ./7.4/Dockerfile
     env_file:
       - .env
-    working_dir: /var/www/src
+    working_dir: ${CONTAINER_PROJECT_PATH}
     volumes:
       - ./conf/custom.ini:/usr/local/etc/php/conf.d/custom.ini:cached
       - ./conf/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini:cached
