@@ -80,9 +80,9 @@ _if you have mysql dump_
 - run `./bin/magento.sh indexer:reset && ./bin/magento.sh indexer:reindex`
 ---
 _if you don't have mysql dump_
-- install magento with script: `./bin/magento/setup/install.sh DOMAIN IP PORT LOCALE CURRENCY TIMEZONE AMQP_USER AMQP_PASSWORD`,
+- install magento with script: `./bin/magento/setup/install.sh DOMAIN IP PORT LOCALE CURRENCY TIMEZONE AMQP_USER AMQP_PASSWORD MAGENTO_INSTALLATION_DIR`,
   `AMQP_USER` and `AMQP_PASSWORD` can be taken from .env file variable `COMPOSE_PROJECT_NAME`
-  (example for project name **magento**: `./bin/magento/setup/install.sh m2.local.magento 127.0.0.1 ::1 en_AU AUD Australia/Melbourne magento magento`)
+  (example for project name **magento** and magento sources in `/var/www/src` directory: `./bin/magento/setup/install.sh m2.local.magento 127.0.0.1 ::1 en_AU AUD Australia/Melbourne magento magento /var/www/src`)
 - check if everything ok with project installation `./bin/magento.sh`
 ---
 

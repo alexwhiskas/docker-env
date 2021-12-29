@@ -18,9 +18,10 @@ AMQP_USER=$6
 AMQP_PASSWORD=$7
 MAGENTO_DIRECTORY=$8
 
-echo $DOMAIN $DEFAULT_IP $MAGENTO_LOCALE $MAGENTO_CURRENCY $MAGENTO_TIMEZONE $AMQP_USER $AMQP_PASSWORD;
+# uncomment line below to print and check your values
+#echo $DOMAIN $DEFAULT_IP $MAGENTO_LOCALE $MAGENTO_CURRENCY $MAGENTO_TIMEZONE $AMQP_USER $AMQP_PASSWORD $MAGENTO_DIRECTORY;
 
-./bin/docker/cli.sh -u www-data php-fpm /bin/sh -c "(cd $MAGENTO_DIRECTORY && bin/magento setup:install \
+./bin/docker/php.sh /bin/sh -c "(cd $MAGENTO_DIRECTORY && bin/magento setup:install \
   --db-host=\"mysql\" \
   --db-name=\"magento\" \
   --db-user=\"root\" \
@@ -51,4 +52,4 @@ echo $DOMAIN $DEFAULT_IP $MAGENTO_LOCALE $MAGENTO_CURRENCY $MAGENTO_TIMEZONE $AM
   --session-save-redis-host=\"redis\" \
   --session-save-redis-log-level=4 \
   --session-save-redis-db=2 \
-  --use-rewrites=1)"
+  --use-rewrites=1)";
