@@ -89,6 +89,6 @@ _if you don't have mysql dump_
 - setup domain with `./bin/magento/setup/domain.sh $IP_ADDRESS $DOMAIN --no-port` (port will be used only for macOS)
 
 ### Run commands inside docker containers (check _Tips_ section, on how you should run scripts from _bin_ folder)
-- run `./bin/docker/cli.sh mysql bash` it will "connect" you into mysql container and you will be able to login to mysql service and perform some operations
+- run `./bin/docker/cli.sh SERVICE_NAME bash`, ex: `./bin/docker/cli.sh mysql bash` it will "connect" you into mysql container and you will be able to login to mysql service and perform some operations
 - run `./bin/magento.sh` - run `bin/magento` script inside container
 - check `./bin/magento` folder for useful scripts
