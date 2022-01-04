@@ -33,10 +33,11 @@ services:
       service: nginx
 #    volumes:
 #      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
-#      - magento:/var/www/src # mount "magento" volume, if you want to keep /var/www/src contents after container deletion without mounting folder from localhost
 #     there might be external folders which you should additionally mount to your container
 #      - ${HOST_PUBLIC_MEDIA_FOLDER}:/var/www/public:cached
 #      - ${HOST_PRIVATE_MEDIA_FOLDER}:/var/www/private:cached
+#     section below for macos, mount "magento" volume, if you want to keep /var/www/src contents after container deletion without mounting folder from localhost
+#      - magento:/var/www/src
     depends_on:
       - php-fpm
 #    ports: # uncomment to bind for used OS (for nginx as only ws to avoid varnish cache, no https)
@@ -50,10 +51,11 @@ services:
       service: php-fpm
 #    volumes:
 #      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
-#      - magento:/var/www/src # mount "magento" volume, if you want to keep /var/www/src contents after container deletion without mounting folder from localhost
 #     there might be external folders which you should additionally mount to your container
 #      - ${HOST_PUBLIC_MEDIA_FOLDER}:/var/www/public:cached
 #      - ${HOST_PRIVATE_MEDIA_FOLDER}:/var/www/private:cached
+#     section below for macos, mount "magento" volume, if you want to keep /var/www/src contents after container deletion without mounting folder from localhost
+#      - magento:/var/www/src
     depends_on:
       - mysql
       - redis
