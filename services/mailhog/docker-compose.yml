@@ -7,3 +7,6 @@ services:
       - .env
     logging:
       driver: 'none' # disable saving logs
+    command: ["-storage=maildir", "-maildir-path=/maildir"]
+    volumes:
+      - ./../../volumes/mailhog:/maildir:delegated

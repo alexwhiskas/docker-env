@@ -8,6 +8,8 @@ volumes/mysql
 !volumes/mysql/.placeholder
 volumes/rabbitmq
 !volumes/rabbitmq/.placeholder
+volumes/mailhog
+!volumes/mailhog/.placeholder
 
 diff-files
 !diff-files/.placeholder
