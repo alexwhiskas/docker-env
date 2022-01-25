@@ -117,8 +117,8 @@ services:
 #      file: ./services/elasticsearch/docker-compose.yml
 #      service: elasticsearch
 #    ports: # uncomment to bind for used OS
-#      - "${GENERIC_IP}:9200:9200" # linux
-#      - "${GENERIC_IP}:9300:9300" # linux
+#      - "${IP_ADDRESS}:9200:9200" # linux
+#      - "${IP_ADDRESS}:9300:9300" # linux
 #      - "9200:9200" # macos
 #      - "9300:9300" # macos
 
