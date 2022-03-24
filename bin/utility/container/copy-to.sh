@@ -1,8 +1,8 @@
 #!/bin/bash
 
-[ -z "$1" ] && echo "Define service name to copy from" && exit
-[ -z "$2" ] && echo "Define directory to copy from service container" && exit
-[ -z "$3" ] && echo "Define directory to copy to localhost" && exit
+[ -z "$1" ] && echo "Define service name to copy to" && exit
+[ -z "$2" ] && echo "Define path to copy from localhost" && exit
+[ -z "$3" ] && echo "Define path to copy to service container" && exit
 
 SERVICE_NAME=$1
 DIR_FROM=$2
