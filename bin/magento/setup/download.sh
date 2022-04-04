@@ -14,4 +14,4 @@ else
   COMPOSER="composer"
 fi
 
-./bin/docker/cli.sh --no-tty -u www-data php-fpm $COMPOSER create-project --repository=https://repo.magento.com/ magento/project-"${EDITION}"-edition="${VERSION}" ${FOLDER}
+./bin/docker/cli.sh --use-tty -u www-data php-fpm $COMPOSER create-project --repository=https://repo.magento.com/ magento/project-"${EDITION}"-edition="${VERSION}" ${FOLDER}

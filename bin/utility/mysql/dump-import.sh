@@ -5,4 +5,4 @@
 
 echo "$1 < $2"
 
-./bin/docker/cli.sh --no-tty mysql mysql -uroot -proot $1 < $2;
+./bin/docker/cli.sh --use-tty mysql mysql -uroot -proot $1 < $2;

@@ -54,6 +54,8 @@ services:
 #     there might be external folders which you should additionally mount to your container
 #      - ${HOST_PUBLIC_MEDIA_FOLDER}:/var/www/public:cached
 #      - ${HOST_PRIVATE_MEDIA_FOLDER}:/var/www/private:cached
+#     section below is for those who really knows what to do :)
+#      - ./diff-files/ssh:/var/www/.ssh:delegated
 #     section below for macos, mount "magento" volume, if you want to keep /var/www/src contents after container deletion without mounting folder from localhost
 #      - magento:/var/www/src
     depends_on:
@@ -77,6 +79,7 @@ services:
 
   mysql:
     env_file: .env
+#    command: --max_allowed_packet=32505856
     extends:
       file: ./services/mysql/docker-compose.yml
       service: mysql
@@ -96,10 +99,10 @@ services:
       file: ./services/rabbitmq/docker-compose.yml
       service: rabbitmq
 #    ports: # uncomment to bind for used OS
-#      - "${IP_ADDRESS}:15672:15672" # linux
-#      - "${IP_ADDRESS}:5672:5672" # linux
-#      - "15672:15672" # macos
-#      - "5672:5672" # macos
+#      - "${IP_ADDRESS}:15672:15672" # linux, management port, can be accessed from browser
+#      - "${IP_ADDRESS}:5672:5672" # linux, main port
+#      - "15672:15672" # macos, management port, can be accessed from browser
+#      - "5672:5672" # macos, main port
 
   mailhog:
     env_file: .env

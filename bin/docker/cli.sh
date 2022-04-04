@@ -1,14 +1,17 @@
 #!/bin/bash
 
-if [ "$1" == "--no-tty" ]; then
-  NO_TTY="-T"
+
+if [ "$1" == "--use-tty" ]; then
+  TTY_PARAM="-T "
   SERVICE=$2
   COMMAND=${@:3}
 else
-  NO_TTY=
+  TTY_PARAM=
   SERVICE=$1
   COMMAND=${@:2}
 fi
+
+#TTY_PARAM="-T "
 
 # uncomment lines below to check if service name command will be passed correctly
 #echo "Service: $SERVICE";
@@ -21,4 +24,4 @@ fi
 
 [ -z "$COMMAND" ] && echo "Define CLI command (ex. ls)" && exit;
 
-docker-compose exec $NO_TTY $SERVICE $COMMAND;
+docker-compose exec $TTY_PARAM$SERVICE $COMMAND;

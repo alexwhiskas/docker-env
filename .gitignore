@@ -13,6 +13,7 @@ volumes/mailhog
 
 diff-files
 !diff-files/.placeholder
+!diff-files/ssh/.placeholder
 
 services/php-fpm/etc
 !services/php-fpm/etc/.placeholder
