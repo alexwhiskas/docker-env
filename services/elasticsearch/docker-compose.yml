@@ -2,13 +2,15 @@ version: "2.0"
 
 services:
   elasticsearch:
-    image: elasticsearch:6.8.18
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
     env_file:
       - .env
     container_name: ${COMPOSE_PROJECT_NAME}-m2-elastic
     volumes:
       - ./../../volumes/elasticsearch:/usr/share/elasticsearch/data:cached
-    environment:
-      - LOGSPOUT=ignore
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - bootstrap.memory_lock=true
+#    environment:
+#      - LOGSPOUT=ignore
+#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - bootstrap.memory_lock=true
