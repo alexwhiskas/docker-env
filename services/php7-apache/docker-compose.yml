@@ -1,0 +1,17 @@
+version: '2.0'
+
+services:
+  php-apache:
+    build:
+      context: ./
+      dockerfile: ./build/Dockerfile
+    volumes:
+      - ./conf-php/override-php.ini:/usr/local/etc/php/conf.d/override-php.ini:delegated
+      - ./conf-apache/vhost.conf:/etc/apache2/sites-available/000-default.conf:delegated
+      - ./conf-apache/ports.conf:/etc/apache2/ports.conf:delegated
+    env_file:
+      - .env
+    working_dir: ${CONTAINER_PROJECT_PATH}
+    mem_limit: 2G
+    mem_reservation: 512M
+    restart: unless-stopped
