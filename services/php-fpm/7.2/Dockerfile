@@ -47,3 +47,8 @@ RUN docker-php-ext-enable xdebug;
 
 RUN curl -sS https://getcomposer.org/installer | php -- --1 --install-dir=/usr/local/bin --filename=composer;
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer-v2;
+
+RUN apt-get update \
+ && apt-get install --assume-yes --no-install-recommends \
+      git-core \
+      openssh-client;

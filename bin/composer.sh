@@ -8,4 +8,4 @@ else
   COMMAND=$@
 fi
 
-./bin/docker/cli.sh -u www-data php-fpm $COMPOSER $COMMAND
+docker-compose exec php-fpm $COMPOSER $COMMAND;

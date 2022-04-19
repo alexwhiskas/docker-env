@@ -1,5 +1,10 @@
 # Docker Environment for Local Development
 
+### System Requirements
+- install docker
+- install docker-compose
+- install jq (used by some scripts to parse json)
+
 ### Files structure
 - **docker-compose.yml** files - main entry point which manages list of available services (nginx, php-fpm, mysql, etc.),
 you should update it according to used OS, and you also might want to disable https or varnish service (just follow tips in docker-compose.yml file itself, update "ports" configuration, etc.)
