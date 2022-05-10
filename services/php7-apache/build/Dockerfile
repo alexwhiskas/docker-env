@@ -69,10 +69,9 @@ RUN docker-php-ext-enable xdebug
 RUN groupadd -g 1000 project
 RUN useradd -u 1000 -g 1000 project
 
-#RUN sed -i -e 's@^mozilla/AddTrust_External_Root.crt@!&@' /etc/ca-certificates.conf
-#RUN update-ca-certificates
 
 RUN ln -s /usr/local/bin/php /usr/bin/php
 
-#RUN echo "Europe/Paris" | tee /etc/timezone
-#RUN ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+RUN pecl install -o -f redis \
+&&  rm -rf /tmp/pear \
+&&  docker-php-ext-enable redis
