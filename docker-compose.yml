@@ -1,6 +1,18 @@
 version: "2.0"
 
 services:
+  ssl-proxy:
+    env_file: .env
+    extends:
+      file: ./services/ssl-proxy/docker-compose.yml
+      service: ssl-proxy
+    depends_on:
+      - php-apache
+#    ports: # uncomment to bind for used OS (http/s request flow: ssl-proxy -> varnish -> nginx)
+#      - "${IP_ADDRESS}:80:80" # linux
+#      - "${IP_ADDRESS}:443:443" # linux
+#        - "80:80" # macos
+#        - "443:443" # macos
 
 #  varnish:
 #    env_file: .env
@@ -31,8 +43,8 @@ services:
       - mysql
       - redis
       - mailhog
-    ports:
-      - "${IP_ADDRESS}:80:81"
+#    ports:
+#      - "${IP_ADDRESS}:80:80"
 
   mysql:
     env_file: .env
