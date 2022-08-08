@@ -6,7 +6,7 @@ events {
 
 http {
     upstream backends {
-        server varnish:80;
+        server php-apache:80;
     }
 
     charset utf-8;
