@@ -4,7 +4,7 @@ services:
   php-fpm:
     build:
       context: ./
-      dockerfile: ./7.4/Dockerfile
+      dockerfile: ./8.1/Dockerfile
     env_file:
       - .env
     working_dir: ${CONTAINER_PROJECT_PATH}
@@ -12,7 +12,8 @@ services:
       - ./conf/custom.ini:/usr/local/etc/php/conf.d/custom.ini:cached
       - ./conf/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini:cached
       - ./conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:cached
+      - ~/.ssh/known_hosts:/var/www/.ssh/known_hosts:cached
 #     section below is for those who really knows what to do :)
-#      - ${COMPOSER_CACHE_PATH}:/var/www/.composer:cached
+      - ${COMPOSER_CACHE_PATH}:/var/www/.composer:cached
     environment:
       - PHP_IDE_CONFIG=serverName=${COMPOSE_PROJECT_NAME}

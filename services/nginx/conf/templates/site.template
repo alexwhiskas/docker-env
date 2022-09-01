@@ -1,8 +1,5 @@
 map $http_host $MAGE_RUN_CODE {
     default ${DEFAULT_STORE_CODE};
-
-    # magento multistore configuration
-    # HOST.COM STORE_CODE
 }
 
 server {
@@ -10,8 +7,5 @@ server {
     client_max_body_size 108M;
     access_log /var/log/nginx/application.access.log;
     set $MAGE_ROOT /var/www/src;
-#    set $MAGE_MODE developer;
-    set $MAGE_RUN_TYPE store; # $MAGE_RUN_TYPE to store or website;
-
     include /etc/nginx/docker/magento2.conf;
 }

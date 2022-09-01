@@ -3,7 +3,7 @@ version: "2.0"
 services:
 
   nginx:
-    image: nginx
+    image: nginx:1.18
     env_file:
       - .env
     volumes:

@@ -4,13 +4,14 @@ services:
   elasticsearch:
     build:
       context: ./
-      dockerfile: ./6.8.18/Dockerfile
+      dockerfile: 7.17.5/Dockerfile
     env_file:
       - .env
     container_name: ${COMPOSE_PROJECT_NAME}-m2-elastic
     volumes:
       - ./../../volumes/elasticsearch:/usr/share/elasticsearch/data:cached
-#    environment:
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
 #      - LOGSPOUT=ignore
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
 #      - bootstrap.memory_lock=true
