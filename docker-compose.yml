@@ -2,19 +2,20 @@ version: "2.0"
 
 services:
 
-#  ssl-proxy:
-#    env_file: .env
-#    extends:
-#      file: ./services/ssl-proxy/docker-compose.yml
-#      service: ssl-proxy
-#    depends_on:
+  ssl-proxy:
+    env_file: .env
+    extends:
+      file: ./services/ssl-proxy/docker-compose.yml
+      service: ssl-proxy
+    depends_on:
 #      - varnish
-##    ports: # uncomment to bind for used OS (http/s request flow: ssl-proxy -> varnish -> nginx)
-##      - "${IP_ADDRESS}:80:80" # linux
-##      - "${IP_ADDRESS}:443:443" # linux
-##      - "80:80" # macos
-##      - "443:443" # macos
-#
+      - nginx
+    ports: # uncomment to bind for used OS (http/s request flow: ssl-proxy -> varnish -> nginx)
+      - "${IP_ADDRESS}:80:80" # linux
+      - "${IP_ADDRESS}:443:443" # linux
+#      - "80:80" # macos
+#      - "443:443" # macos
+
 #  varnish:
 #    env_file: .env
 #    extends:
@@ -40,8 +41,8 @@ services:
 #      - magento:/var/www/src
     depends_on:
       - php-fpm
-    ports: # uncomment to bind for used OS (for nginx as only ws to avoid varnish cache, no https)
-      - "${IP_ADDRESS}:80:80" # linux
+#    ports: # uncomment to bind for used OS (for nginx as only ws to avoid varnish cache, no https)
+#      - "${IP_ADDRESS}:80:80" # linux
 #      - "80:80" # macos
 
   php-fpm:

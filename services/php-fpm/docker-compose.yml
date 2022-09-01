@@ -12,7 +12,6 @@ services:
       - ./conf/custom.ini:/usr/local/etc/php/conf.d/custom.ini:cached
       - ./conf/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini:cached
       - ./conf/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:cached
-      - ~/.ssh/known_hosts:/var/www/.ssh/known_hosts:cached
 #     section below is for those who really knows what to do :)
 #      - ${COMPOSER_CACHE_PATH}:/var/www/.composer:cached
     environment:
