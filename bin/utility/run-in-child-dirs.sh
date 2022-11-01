@@ -6,6 +6,11 @@
 for CHILD_DIR in $1*; do
     if [[ -d "$CHILD_DIR" ]]; then
         echo "DIR: $CHILD_DIR";
-        (cd $CHILD_DIR && $2);
+
+#        if [[ $CHILD_DIR != *"magento2-import"* ]]; then
+#          if [[ $CHILD_DIR != *"magento2-rewards"* ]]; then
+            (cd $CHILD_DIR && ${@:2});
+#          fi;
+#        fi;
     fi;
 done;

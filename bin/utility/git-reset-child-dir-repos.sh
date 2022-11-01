@@ -12,7 +12,7 @@ echo "DONE: Parsing composer.lock"
 
 for CHILD_DIR in $1$2*; do
     if [[ -d "$CHILD_DIR" ]]; then
-#        echo "PACKAGE DIR: $CHILD_DIR"
+        echo "PACKAGE DIR: $CHILD_DIR"
         MODULE_NAME=$(basename $CHILD_DIR)
 #        echo "Package: $MODULE_NAME"
 
@@ -20,17 +20,12 @@ for CHILD_DIR in $1$2*; do
 #        COMPOSER_LOCK_INFO=$(jq '."'$2$MODULE_NAME'"' <<< $PACKAGES_REFERENCES | tr -d '"');
 #        echo "COMPOSER_LOCK_INFO: $COMPOSER_LOCK_INFO";
 
-        echo "COMPOSER_LOCK_VERSION: $COMPOSER_LOCK_VERSION";
-        if [[ "$COMPOSER_LOCK_VERSION" != "dev-master" ]]; then
-          continue
-        fi;
+#        echo "COMPOSER_LOCK_VERSION: $COMPOSER_LOCK_VERSION";
+#        if [[ "$COMPOSER_LOCK_VERSION" != "dev-master" ]]; then
+#          continue
+#        fi;
 
-        COMPOSER_LOCK_REFERENCE=$(jq '."'$2$MODULE_NAME'".reference' <<< $PACKAGES_REFERENCES | tr -d '"')
-        echo "COMPOSER_LOCK_REFERENCE: $COMPOSER_LOCK_REFERENCE"
-
-        LOCAL_REFERENCE=`(cd $CHILD_DIR && git rev-parse HEAD)`
         LOCAL_BRANCH_NAME=`(cd $CHILD_DIR && git rev-parse --abbrev-ref HEAD)`
-
         echo "Local branch is: $LOCAL_BRANCH_NAME"
         if [[ "$COMPOSER_BRANCH" != "$LOCAL_BRANCH_NAME" ]]; then
             echo -n "Change branch to $COMPOSER_BRANCH? (y/n)"
@@ -45,6 +40,9 @@ for CHILD_DIR in $1$2*; do
             fi
         fi;
 
+        COMPOSER_LOCK_REFERENCE=$(jq '."'$2$MODULE_NAME'".reference' <<< $PACKAGES_REFERENCES | tr -d '"')
+        echo "COMPOSER_LOCK_REFERENCE: $COMPOSER_LOCK_REFERENCE"
+        LOCAL_REFERENCE=`(cd $CHILD_DIR && git rev-parse HEAD)`
         echo "Composer reference is: $COMPOSER_LOCK_REFERENCE";
         echo "Local reference is: $LOCAL_REFERENCE";
 
@@ -54,13 +52,15 @@ for CHILD_DIR in $1$2*; do
             read changecommit
             if [ "$changecommit" != "${changecommit#[Yy]}" ]; then
 #               reset commit to composer.lock reference
-                git reset --hard $COMPOSER_LOCK_REFERENCE;
+                (cd $CHILD_DIR && git reset --hard $COMPOSER_LOCK_REFERENCE)
                 echo "Commit changed to: $COMPOSER_LOCK_REFERENCE";
             else
               echo "Terminated..."
-              exit;
+#              exit;
             fi
-            (cd $CHILD_DIR && git status)
+
+            echo "Fetching remote...";
+            (cd $CHILD_DIR && git fetch)
         fi;
     fi;
 done;
