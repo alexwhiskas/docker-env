@@ -23,15 +23,15 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install curl iconv json mbstring mysqli pdo pdo_mysql \
     posix simplexml soap sockets zip
 
+RUN apt-get install -y libwebp-dev
+
 RUN docker-php-ext-configure gd --with-gd \
     --with-jpeg-dir=/usr \
     --with-png-dir=/usr \
     --with-freetype-dir=/usr \
-    --enable-gd-native-ttf \
-    --enable-gd-jis-conv
+    --enable-gd-jis-conv \
+    --with-webp-dir=/usr
 RUN docker-php-ext-install gd
-
-RUN docker-php-ext-install mbstring
 
 RUN pecl install xdebug-2.7.0 \
     && docker-php-ext-enable xdebug
@@ -47,3 +47,13 @@ RUN pecl install mcrypt-1.0.1 \
 RUN pecl install -o -f redis \
 &&  rm -rf /tmp/pear \
 &&  docker-php-ext-enable redis
+
+# mailhog support
+RUN apt-get install --no-install-recommends --assume-yes --quiet ca-certificates curl git && \
+    rm -rf /var/lib/apt/lists/*;
+# x86
+RUN curl -Lsf 'https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf -
+ENV PATH /usr/local/go/bin:$PATH
+RUN go get github.com/mailhog/mhsendmail
+RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
+RUN echo 'sendmail_path = /usr/bin/mhsendmail --smtp-addr mailhog:1025' > /usr/local/etc/php/php.ini;
