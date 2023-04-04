@@ -15,3 +15,5 @@ services:
     mem_limit: 2G
     mem_reservation: 512M
     restart: unless-stopped
+    environment:
+      - PHP_IDE_CONFIG=serverName=${COMPOSE_PROJECT_NAME}
