@@ -7,5 +7,4 @@ services:
       - .env
     volumes:
       - ./conf/localhost.template:/etc/nginx/docker/localhost.template:cached
-      - ./certificates/self-signed.key:/etc/ssl/certs/self-signed.key
-      - ./certificates/self-signed.crt:/etc/ssl/certs/self-signed.crt
+      - ./certificates/:/etc/ssl/certs/
