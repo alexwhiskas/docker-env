@@ -1,0 +1,13 @@
+map $http_host $MAGE_RUN_CODE {
+    default ${DEFAULT_STORE_CODE};
+}
+
+server {
+    listen 80 default;
+    client_max_body_size 108M;
+    access_log /var/log/nginx/application.access.log;
+    set $MAGE_ROOT ${CONTAINER_PROJECT_PATH};
+    set $MAGE_RUN_TYPE store;
+
+    include /etc/nginx/docker/magento2.conf;
+}

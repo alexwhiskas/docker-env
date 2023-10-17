@@ -1,0 +1,55 @@
+version: "2.0"
+
+services:
+
+  nginx:
+    env_file: .env
+    image: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:cached
+      - ./nginx/magento2.conf:/etc/nginx/docker/magento2.conf:cached
+      - ./nginx/templates/backend.template:/etc/nginx/docker/backend.template:cached
+      - ./nginx/templates/site.template:/etc/nginx/docker/site.template:cached
+      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:cached # mount project sources from localhost folder
+    depends_on:
+      - php-fpm
+    ports:
+      - "89:80" # macos
+    command: /bin/bash -c "envsubst < /etc/nginx/docker/backend.template > /etc/nginx/conf.d/backend.conf && envsubst \"$$(env | sed -e 's/=.*//' -e 's/^/\$$/g')\" < /etc/nginx/docker/site.template > /etc/nginx/conf.d/site.conf && exec nginx -g 'daemon off;'"
+
+  php-fpm:
+    env_file: .env
+    build:
+      context: ./
+      dockerfile: ./php-fpm/Dockerfile
+    working_dir: ${CONTAINER_PROJECT_PATH}
+    volumes:
+      - ./php-fpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini:cached
+      - ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini:cached
+      - ./php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:cached
+      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:cached # mount project sources from localhost folder
+    environment:
+      - PHP_IDE_CONFIG=serverName=${COMPOSE_PROJECT_NAME}
+
+  mysql:
+    env_file: .env
+    image: mysql:8.0
+    platform: linux/x86_64
+    volumes:
+      - ${MYSQL_VOLUME_DIR}:/var/lib/mysql:cached
+    ports:
+      - "3310:3306"
+    command: --max_allowed_packet=32505856
+
+  opensearch:
+    image: opensearchproject/opensearch:2.5.0
+    environment:
+      - "discovery.type=single-node"
+      - "plugins.security.disabled=true"
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+
+  redis:
+    env_file: .env
+    image: redis:7.0
