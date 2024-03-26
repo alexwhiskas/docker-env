@@ -8,31 +8,32 @@ services:
       file: ./services/ssl-proxy/docker-compose.yml
       service: ssl-proxy
     depends_on:
-      - varnish
-#    ports: # uncomment to bind for used OS (http/s request flow: ssl-proxy -> varnish -> nginx)
-#      - "${IP_ADDRESS}:80:80" # linux
-#      - "${IP_ADDRESS}:443:443" # linux
+#      - varnish
+      - nginx
+    ports: # uncomment to bind for used OS (http/s request flow: ssl-proxy -> varnish -> nginx)
+      - "${IP_ADDRESS}:80:80" # linux
+      - "${IP_ADDRESS}:443:443" # linux
 #      - "80:80" # macos
 #      - "443:443" # macos
 
-  varnish:
-    env_file: .env
-    extends:
-      file: ./services/varnish/docker-compose.yml
-      service: varnish
-    depends_on:
-      - nginx
-#    ports: # uncomment to bind for used OS (for varnish-nginx to avoid ssl-proxy, no https)
-#      - "${IP_ADDRESS}:80:80" # linux
-#      - "80:80" # macos
+#  varnish:
+#    env_file: .env
+#    extends:
+#      file: ./services/varnish/docker-compose.yml
+#      service: varnish
+#    depends_on:
+#      - nginx
+##    ports: # uncomment to bind for used OS (for varnish-nginx to avoid ssl-proxy, no https)
+##      - "${IP_ADDRESS}:80:80" # linux
+##      - "80:80" # macos
 
   nginx:
     env_file: .env
     extends:
       file: ./services/nginx/docker-compose.yml
       service: nginx
-#    volumes:
-#      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
+    volumes:
+      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
 #     there might be external folders which you should additionally mount to your container
 #      - ${HOST_PUBLIC_MEDIA_FOLDER}:/var/www/public:cached
 #      - ${HOST_PRIVATE_MEDIA_FOLDER}:/var/www/private:cached
@@ -49,8 +50,8 @@ services:
     extends:
       file: ./services/php-fpm/docker-compose.yml
       service: php-fpm
-#    volumes:
-#      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
+    volumes:
+      - ${LOCALHOST_PROJECT_PATH}:${CONTAINER_PROJECT_PATH}:delegated # mount project sources from localhost folder
 #     there might be external folders which you should additionally mount to your container
 #      - ${HOST_PUBLIC_MEDIA_FOLDER}:/var/www/public:cached
 #      - ${HOST_PRIVATE_MEDIA_FOLDER}:/var/www/private:cached
@@ -83,8 +84,8 @@ services:
     extends:
       file: ./services/mysql/docker-compose.yml
       service: mysql
-#    ports: # uncomment to bind for used OS
-#      - "${IP_ADDRESS}:3306:3306" # linux
+    ports: # uncomment to bind for used OS
+      - "${IP_ADDRESS}:3306:3306" # linux
 #      - "3306:3306" # macos
 
   redis:
@@ -109,16 +110,16 @@ services:
     extends:
       file: ./services/mailhog/docker-compose.yml
       service: mailhog
-#    ports: # webui, uncomment to bind for used OS
-#      - "${IP_ADDRESS}:8025:8025" # linux
+    ports: # webui, uncomment to bind for used OS
+      - "${IP_ADDRESS}:8025:8025" # linux
 #      - "8025:8025" # macos
 
 # if you need elasticsearch, just uncomment configuration below
-#  elasticsearch:
-#    env_file: .env
-#    extends:
-#      file: ./services/elasticsearch/docker-compose.yml
-#      service: elasticsearch
+  elasticsearch:
+    env_file: .env
+    extends:
+      file: ./services/elasticsearch/docker-compose.yml
+      service: elasticsearch
 #    ports: # uncomment to bind for used OS
 #      - "${IP_ADDRESS}:9200:9200" # linux
 #      - "${IP_ADDRESS}:9300:9300" # linux

@@ -2,7 +2,7 @@ version: "2.0"
 
 services:
   rabbitmq:
-    image: rabbitmq:3.7-management
+    image: rabbitmq:3.9-management
     env_file:
       - .env
     volumes:

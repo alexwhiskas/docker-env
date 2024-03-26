@@ -6,7 +6,8 @@ events {
 
 http {
     upstream backends {
-        server varnish:80;
+#        server varnish:80;
+        server nginx:80;
     }
 
     charset utf-8;
