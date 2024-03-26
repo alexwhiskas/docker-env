@@ -2,7 +2,8 @@ version: "2.0"
 
 services:
   mailhog:
-    image: mailhog/mailhog
+    image: jcalonso/mailhog:latest # uncomment if need arm support (apple silicon CPU), comment if not :D
+#    image: mailhog/mailhog
     env_file:
       - .env
     logging:

@@ -4,7 +4,7 @@ services:
   elasticsearch:
     build:
       context: ./
-      dockerfile: 7.17.5/Dockerfile
+      dockerfile: 8.11.4/Dockerfile
     env_file:
       - .env
     container_name: ${COMPOSE_PROJECT_NAME}-m2-elastic
