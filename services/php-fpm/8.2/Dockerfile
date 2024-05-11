@@ -43,7 +43,7 @@ RUN pecl install -o -f \
   imagick \
   xdebug
 
-RUN docker-php-ext-enable xdebug
+RUN docker-php-ext-enable xdebug imagick
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
 RUN docker-php-ext-install -j$(nproc) \
